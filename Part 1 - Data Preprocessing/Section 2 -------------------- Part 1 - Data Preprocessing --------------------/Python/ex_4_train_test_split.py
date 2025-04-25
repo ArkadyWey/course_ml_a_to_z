@@ -17,5 +17,3 @@ print(X_train.shape)
 print(X_test.shape)
 print(X.shape)
 
-# Another change
-# Another change
