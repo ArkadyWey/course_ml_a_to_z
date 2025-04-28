@@ -51,8 +51,25 @@ print(y)
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, train_size=0.8, random_state=1)
 
-print(X_train)
+# print(X_train)
 print(X_test)
 
 # Feature scaling
 # -----
+# ML models need all features to be on same scale so that some features are not ignored
+# Some don't - e.g., in regression, the coefficients we learn will just scale away any scaling in the features do it's not needed
+# There are two main scaling techniques:
+# 1. Standardisation - works well all the time
+# Subtract the mean and divide by the standard deviation - makes the mean be close to zero and the SD be close to 1 - so all values between -3 and +3 (because almost whole distr is within 3 SD of mean)
+# 2. Normalisation - works well when distr is roughly normal
+# Subtract the min and divide by the range - so that numbers fall between 0 and 1
+from sklearn.preprocessing import StandardScaler
+standard_scaler = StandardScaler() # Don't need parameters for standarisation
+
+# Do not apply stndardardisation on features tahtt have been encoded because tey're just 1 and 0 and they'll lose their interpretationa and we don't need to becasue they're all between 0 and 1
+X_train[:, 3:] = standard_scaler.fit_transform(X=X_train[:, 3:]) # Fit gets teh mean and SD of features and transform applies scaling to X
+
+# Now apply the same scaling to the test set (do DON'T fit again, only transform)
+X_test[:, 3:] = standard_scaler.transform(X=X_test[:, 3:])
+
+print(X_test)
