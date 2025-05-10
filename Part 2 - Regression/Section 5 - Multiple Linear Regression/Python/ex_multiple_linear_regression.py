@@ -27,6 +27,9 @@ linear_regressor = linear_regressor.fit(X=X_train, y=y_train)
 
 # Predicting the Test set results
 y_pred = linear_regressor.predict(X=X_test)
+np.set_printoptions(precision=2)
+print(np.concatenate((y_pred.reshape(len(y_pred),1), y_test.reshape(len(y_test),1)),axis=1))
+
 # Evaluate 
 score_train = linear_regressor.score(X=X_train,y=y_train)
 score_test = linear_regressor.score(X=X_test,y=y_test)
